@@ -79,6 +79,9 @@ class Utube:
 
     def get_thumbnail(self) -> str:
         '''Returns a thumbnail path after download the video's thumbnail.'''
+        folder = utils.converter.abs_path('thumbnails\\')
+        if not os.path.exists(folder):
+            os.makedirs(folder)
         thumbnail_path = utils.converter.abs_path(
             f'thumbnails\{self.process_id}.jpg')
         urllib.request.urlretrieve(self.yt_obj.thumbnail_url, thumbnail_path)
@@ -112,6 +115,7 @@ class utube_messages:
         self.callback_query: CallbackQuery = None
         self.upload_message: Message = None
         self.file_type: str = None
+        self.counter = 0
 
     def generate_markup_keyboard(self, file_type, yt_obj: YouTube) -> InlineKeyboardMarkup:
         '''Returns an Inline markup keyboard with all the stream options of a Youtube object.'''
@@ -179,6 +183,9 @@ class utube_messages:
 
     def on_upload(self, current, total):
         '''Sends a progress bar type message when file is being uploaded to the user.'''
+        self.counter += 1
+        if self.counter % 3 != 0:
+            return
         current_mb = round(current/1048576, 2)
         total_mb = round(total/1048576, 2)
         percent = round((100*(current_mb))/total_mb, 2)
