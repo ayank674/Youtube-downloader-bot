@@ -1,0 +1,6 @@
+__pycache__
+*.env
+.vscode/
+Utubebot.session
+Utubebot.session-journal
+user_data.json
