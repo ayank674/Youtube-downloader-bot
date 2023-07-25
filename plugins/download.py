@@ -71,5 +71,5 @@ def dl_file(bot: Utubebot, callback_query: CallbackQuery):
         Utube_obj.messages.user_id, '**Uploading....**')
     Utube_obj.messages.upload_file(Utube_obj.thumbnail, Utube_obj.file)
     bot.delete_messages(
-        Utube_obj.messages.user_id, Utube_obj.messages.callback_query.message.id)
+        Utube_obj.messages.user_id, Utube_obj.messages.upload_message.id)
     Utube_obj.remove_files()
