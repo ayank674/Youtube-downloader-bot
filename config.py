@@ -1,5 +1,6 @@
 import os
 
+
 class Config:
     OWNER = os.environ['OWNER']
 
@@ -11,8 +12,6 @@ class Config:
 
     BOT_TOKEN = os.environ['BOT_TOKEN']
 
-    USERS = os.environ.get('USERS')
-
     CRASH_MESSAGE = os.environ['CRASH_MESSAGE']
 
-    ENCRYPT_KEY = bytes(os.environ['ENCRYPT_KEY'],encoding='utf-8')
+    ENCRYPT_KEY = bytes(os.environ['ENCRYPT_KEY'], encoding='utf-8')
