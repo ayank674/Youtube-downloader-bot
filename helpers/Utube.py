@@ -184,7 +184,7 @@ class utube_messages:
     def on_upload(self, current, total):
         '''Sends a progress bar type message when file is being uploaded to the user.'''
         self.counter += 1
-        if self.counter % 3 != 0:
+        if self.counter % 5 != 0:
             return
         current_mb = round(current/1048576, 2)
         total_mb = round(total/1048576, 2)
