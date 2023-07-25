@@ -131,6 +131,8 @@ class utube_messages:
             filtrd_streams = yt_obj.streams.filter(only_audio=True)
 
         for stream in filtrd_streams:
+            if stream.filesize_mb > 2000:
+                continue
             button = InlineKeyboardButton(self.generate_button_text(stream),
                                           callback_data=(f'{stream.itag}itag{self.process_id}'))
             buttons.append([button])

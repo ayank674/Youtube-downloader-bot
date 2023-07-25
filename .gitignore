@@ -3,3 +3,4 @@ __pycache__
 .vscode/
 Utubebot.session
 Utubebot.session-journal
+user_data.json
