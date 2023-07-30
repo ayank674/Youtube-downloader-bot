@@ -22,7 +22,7 @@
 
 ## TO DEPLOY:
 
-- Create a [render](render.com) account.
+- Create a [render](https://render.com) account.
 - Visit render's [New Web Service](https://dashboard.render.com/select-repo?type=web) Page.
 - Paste this [repo's link](https://github.com/VengeanceOG/Youtube-downloader-bot) in Public git repository option and click continue.
 - Give a name to your service in the name placeholder.
