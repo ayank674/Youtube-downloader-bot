@@ -1,13 +1,13 @@
 # A YT DOWNLOADER TELEGRAM BOT.
 
+## DISCLAIMER: Do Not Use This Bot To Infringe Anyone's Copyright.
+
 ## USAGE:
 
 ### General commands
 
 - start: check if bot is alive.
 - download: reply to a youtube link and follow the directions. A demo is attached below:
-https://github.com/VengeanceOG/Youtube-downloader-bot/assets/107803735/fb3ad597-deaf-4714-851d-4ee35f84d4fe
-
 
 ### Admin only commands.
 
