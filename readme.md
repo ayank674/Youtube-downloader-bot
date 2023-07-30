@@ -1,13 +1,13 @@
 # A YT DOWNLOADER TELEGRAM BOT.
 
+## DISCLAIMER: Do Not Use This Bot To Infringe Anyone's Copyright.
+
 ## USAGE:
 
 ### General commands
 
 - start: check if bot is alive.
 - download: reply to a youtube link and follow the directions. A demo is attached below:
-https://github.com/VengeanceOG/Youtube-downloader-bot/assets/107803735/fb3ad597-deaf-4714-851d-4ee35f84d4fe
-
 
 ### Admin only commands.
 
@@ -22,7 +22,7 @@ https://github.com/VengeanceOG/Youtube-downloader-bot/assets/107803735/fb3ad597-
 
 ## TO DEPLOY:
 
-- Create a [render](render.com) account.
+- Create a [render](https://render.com) account.
 - Visit render's [New Web Service](https://dashboard.render.com/select-repo?type=web) Page.
 - Paste this [repo's link](https://github.com/VengeanceOG/Youtube-downloader-bot) in Public git repository option and click continue.
 - Give a name to your service in the name placeholder.
