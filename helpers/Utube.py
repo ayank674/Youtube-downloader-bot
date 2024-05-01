@@ -145,7 +145,7 @@ class utube_messages:
             return InlineKeyboardMarkup(buttons)
         except Exception as exception:
             msg_handle.handle_utube_exception(
-                self.Utubebot, self.messages.user_id, exception)
+                self.Utubebot, self.user_id, exception)
             return None
             
     def generate_button_text(self, stream) -> str:
