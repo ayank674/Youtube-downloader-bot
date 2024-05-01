@@ -47,7 +47,7 @@ def get_streams(bot: Utubebot, callback_query: CallbackQuery):
     markup_keyboard = Utube_obj.messages.generate_markup_keyboard(
         file_type, Utube_obj.yt_obj)
     if markup_keyboard is None:
-        bot.delete_messages(callback_query.message.chat.id, callback_query.id)
+        bot.delete_messages(callback_query.message.chat.id, callback_query.message.id)
         return
     callback_query.edit_message_caption(
         '**Choose the resolution of your desired file**:', reply_markup=markup_keyboard)
