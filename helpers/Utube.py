@@ -120,29 +120,34 @@ class utube_messages:
     def generate_markup_keyboard(self, file_type, yt_obj: YouTube) -> InlineKeyboardMarkup:
         '''Returns an Inline markup keyboard with all the stream options of a Youtube object.'''
         buttons = []
+        try:
+            
+            if file_type == '1':  # user needs both audio and video.
+                self.file_type = 'video'
+                filtrd_streams = yt_obj.streams.filter(progressive=True)
 
-        if file_type == '1':  # user needs both audio and video.
-            self.file_type = 'video'
-            filtrd_streams = yt_obj.streams.filter(progressive=True)
+            elif file_type == '2':  # user needs only video.
+                self.file_type = 'video'
+                filtrd_streams = yt_obj.streams.filter(
+                    adaptive=True, only_video=True)
 
-        elif file_type == '2':  # user needs only video.
-            self.file_type = 'video'
-            filtrd_streams = yt_obj.streams.filter(
-                adaptive=True, only_video=True)
+            elif file_type == '3':  # user nedds only audio.
+                self.file_type = 'audio'
+                filtrd_streams = yt_obj.streams.filter(only_audio=True)
 
-        elif file_type == '3':  # user nedds only audio.
-            self.file_type = 'audio'
-            filtrd_streams = yt_obj.streams.filter(only_audio=True)
-
-        for stream in filtrd_streams:
-            if stream.filesize_mb > 2000:
-                continue
-            button = InlineKeyboardButton(self.generate_button_text(stream),
+            for stream in filtrd_streams:
+                if stream.filesize_mb > 2000:
+                    continue
+                button = InlineKeyboardButton(self.generate_button_text(stream),
                                           callback_data=(f'{stream.itag}itag{self.process_id}'))
-            buttons.append([button])
+                buttons.append([button])
 
-        return InlineKeyboardMarkup(buttons)
-
+            return InlineKeyboardMarkup(buttons)
+        except Exception as exception:
+            msg_handle.handle_utube_exception(
+                self.messages.Utubebot, self.messages.user_id, exception)
+            return None
+            
     def generate_button_text(self, stream) -> str:
         '''Returns the text of a markup button.'''
         if stream.type == 'video':
