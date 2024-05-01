@@ -7,7 +7,7 @@
 ### General commands
 
 - start: check if bot is alive.
-- download: reply to a youtube link and follow the directions. A demo is attached below:
+- download: reply to a youtube link and follow the directions.
 
 ### Admin only commands.
 
