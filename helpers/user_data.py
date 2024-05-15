@@ -2,7 +2,7 @@
 from config import Config
 import psycopg2 
 
-class user_data:
+class User_data:
 
     def __init__(self) -> None:
         '''
