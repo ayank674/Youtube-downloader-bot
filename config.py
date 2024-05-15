@@ -24,4 +24,4 @@ class Config:
 
     PASS = os.environ.get("PASSWORD")
 
-    PORT = int(os.environ.get("PORT", 5432))
+    PORT = os.environ.get("PORT", 5432)
