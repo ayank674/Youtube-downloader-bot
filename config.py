@@ -2,16 +2,26 @@ import os
 
 
 class Config:
-    OWNER = os.environ['OWNER']
+    OWNER = os.environ.get("OWNER", 0)
 
-    SESSION_NAME = os.environ['SESSION_NAME']
+    SESSION_NAME = os.environ.get("SESSION_NAME", "Utube-bot")
 
-    API_ID = os.environ['API_ID']
+    API_ID = os.environ.get("API_ID")
 
-    API_HASH = os.environ['API_HASH']
+    API_HASH = os.environ.get("API_HASH")
 
-    BOT_TOKEN = os.environ['BOT_TOKEN']
+    BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
-    CRASH_MESSAGE = os.environ['CRASH_MESSAGE']
+    CRASH_MESSAGE = os.environ.get("CRASH_MESSAGE", "Oops! Something went wrong")
 
-    ENCRYPT_KEY = bytes(os.environ['ENCRYPT_KEY'], encoding='utf-8')
+    START_MESSAGE = os.environ.get("START_MESSAGE", "Hi! This a bot.")
+
+    HOST = os.environ.get("HOST")
+
+    DB_NAME = os.environ.get("DB_NAME")
+
+    USER = os.environ.get("USER")
+
+    PASS = os.environ.get("PASSWORD")
+
+    PORT = int(os.environ.get("PORT", 5432))

@@ -1,12 +1,6 @@
 '''Store users' data.'''
-import json
 from config import Config
-import utils.converter
-from cryptography.fernet import Fernet
-import os
-
-fernet = Fernet(Config.ENCRYPT_KEY)
-
+import psycopg2 
 
 class user_data:
 
@@ -24,81 +18,60 @@ int specified role is 2. He can use all the commands except removing or changing
 
 user:
 int specified role is 3. He can use only the download command.
-
-
-JSON is stored in following format:
-
-{"Users": {"User1": {"role": int}, {"User2": {"role": int},.....}}
 '''
-        if not os.path.isfile(utils.converter.abs_path('user_data.json')):
-            # Create a new dict if no previous data is there.
-            self.data: json = json.loads('{"users":{}}')
+        
+        self.conn: psycopg2._T_conn = psycopg2.connect(host = Config.HOST, dbname = Config.DB_NAME,user = Config.USER,
+                                                       password = Config.PASS, port = Config.PORT)
+        self.cur = self.conn.cursor()
 
-        else:
-            with open(utils.converter.abs_path('user_data.json'), 'rb') as f:
-                self.data: json = json.loads(fernet.decrypt(f.read()))
-
-        self.users: dict = self.data['users']
+        self.cur.execute("CREATE TABLE IF NOT EXISTS user_data(ID INT PRIMARY KEY, ROLE INT)")
 
     def add_user(self, user: str, role: int) -> None:
-        '''Function to add a new user to the data.'''
-        self.users[str(user)] = {'role': role}
-        write_file('user_data.json', self.data)
+        '''Function to add a new user to the data or change the role of an exisiting user.'''
+        user = int(user)
+        self.cur.execute("INSERT INTO user_data(ID, ROLE) VALUES(%s,%s) ON CONFLICT(ID) DO UPDATE SET ID = EXCLUDED.ID, ROLE = EXCLUDED.ROLE", (user, role))
+        self.conn.commit()
 
     def del_user(self, user: str) -> None:  # Delete a user from json data.
         '''Unauthenticate a user from the bot.'''
-        self.users.pop(str(user), None)
-        write_file('user_data.json', self.data)
-
-    def change_role(self, user: str, new_role: int) -> None:
-        '''Change the role of an admin/user to an admin/user.'''
-        if self.users.get(str(user)):
-            self.users[str(user)]['role'] = new_role
-        else:
-            self.users[str(user)] = {'role': new_role}  # It is a new user.
-        write_file('user_data.json', self.data)
+        self.cur.execute("DELETE FROM user_data WHERE  = %s", (user,))
+        self.conn.commit()
 
     def show_admins(self) -> str:  # A function to show admins from data.
         '''Returns a list of all the admins.'''
+        self.cur.execute("SELECT ID FROM user_data WHERE ROLE = %s", (2,))
+        admins = self.cur.fetchall()
         admin_str = ''
         sr_no = 1
-        for user in self.users:
-            role = self.users[user].get('role')
-            if role == 2:  # The user is an admin.
-                admin_str = admin_str + f'\n**{sr_no+1}**. {user}'
+        for admin in admins:
+            if admin: # Not an empty tuple
+                admin_str = admin_str + f'\n**{sr_no}**. {admin[0]}'
                 sr_no += 1
         return admin_str
 
     def show_users(self) -> str:  # A function to show users from data.
         '''Returns a list of all the user. admins are marked in bold.'''
+        self.cur.execute("SELECT ID, ROLE FROM user_data WHERE ROLE>%s", (1,)) # Don't include owner
+        users = self.cur.fetchall()
         user_str = ''
         sr_no = 1
-        for user in self.users:
-            role = self.users[user].get('role')
-            if role == 1:  # Don't include owner in list.
-                continue
+        for user, role in users:
 
-            elif role == 2:  # Display admins in bold.
-                user_str = user_str + f'\n{sr_no+1}. **__{user}__**'
+            if role == 2:  # Display admins in bold.
+                user_str = user_str + f'\n{sr_no}. **__{user}__**'
 
             else:
-                user_str = user_str + f'\n{sr_no+1}. {user}'
+                user_str = user_str + f'\n{sr_no}. {user}'
             sr_no += 1
         return user_str
 
     def get_role(self, id):
         '''Returns the role of a user. If user is not authenticated, 4 is returned as role.'''
-        if self.users.get(str(id)):
-            return self.users[str(id)].get('role')
+        id = int(id)
+        self.cur.execute("SELECT ROLE FROM user_data WHERE ID = %s", (id,))
+        role = self.cur.fetchall()
+        if role: # A non-empty string if id exists.
+            return role[0][0] # return the first element (role) from first row of list.
 
         else:
             return 4
-
-
-def write_file(relpath: str, js: json):
-    '''Function to write the dict to a new file in json format.'''
-    path = utils.converter.abs_path(relpath)
-    with open(path, 'wb') as f:
-        # JSON only allows double quotes.
-        str_data = json.dumps(js)
-        f.write(fernet.encrypt(bytes(str_data, encoding='utf-8')))
