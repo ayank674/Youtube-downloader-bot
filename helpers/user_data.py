@@ -2,7 +2,7 @@
 from config import Config
 import psycopg2 
 
-class utube_user_data:
+class user_data:
 
     def __init__(self) -> None:
         '''
