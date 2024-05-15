@@ -1,6 +1,6 @@
 '''Store users' data.'''
 from config import Config
-import psycopg2 
+import psycopg, psycopg.conninfo
 
 class User_data:
 
@@ -20,8 +20,8 @@ user:
 int specified role is 3. He can use only the download command.
 '''
         
-        self.conn: psycopg2._T_conn = psycopg2.connect(host = Config.HOST, dbname = Config.DB_NAME,user = Config.USER,
-                                                       password = Config.PASS, port = Config.PORT)
+        conn_dict =  psycopg.conninfo.conninfo_to_dict(Config.PG_URI)
+        self.conn: psycopg.Connection = psycopg.connect(**conn_dict)
         self.cur = self.conn.cursor()
 
         self.cur.execute("CREATE TABLE IF NOT EXISTS utube_user_data(ID INT PRIMARY KEY, ROLE INT)")

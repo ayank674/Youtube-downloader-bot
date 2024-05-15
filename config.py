@@ -16,12 +16,4 @@ class Config:
 
     START_MESSAGE = os.environ.get("START_MESSAGE", "Hi! This a bot.")
 
-    HOST = os.environ.get("HOST")
-
-    DB_NAME = os.environ.get("DB_NAME")
-
-    USER = os.environ.get("USER")
-
-    PASS = os.environ.get("PASSWORD")
-
-    PORT = os.environ.get("PORT", 5432)
+    PG_URI = os.environ.get("PG_URI")
