@@ -22,7 +22,7 @@ int specified role is 2. He can use all the commands except removing or changing
 user:
 int specified role is 3. He can use only the download command.
 '''
-        
+        self.restricted = True
         conn_dict =  psycopg.conninfo.conninfo_to_dict(Config.PG_URI)
         self.conn: psycopg.Connection = psycopg.connect(**conn_dict)
         self.cur = self.conn.cursor()
@@ -32,9 +32,9 @@ int specified role is 3. He can use only the download command.
     def add_user(self, user: str, role: int) -> None:
         '''Function to add a new user to the data or change the role of an exisiting user.'''
         if user.lower() == "all":
-            user = 0
-        else:
-            user = int(user)
+            self.restricted = False
+            return
+        user = int(user)
         self.cur.execute("INSERT INTO utube_user_data(ID, ROLE) VALUES(%s,%s) ON CONFLICT(ID) DO UPDATE SET ID = EXCLUDED.ID, ROLE = EXCLUDED.ROLE", (user, role))
         self.conn.commit()
 
