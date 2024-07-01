@@ -40,7 +40,7 @@ def check_id(bot, message: types.Message):
     Check if the given message contains only digits (valid id).
     If it isn't a valid id, a reply is sent to the user.
     '''
-    if message.text.isdigit():
+    if message.text.isdigit() or message.text.lower() == "all":
         return message.text
     else:
         bot.send_message(message.chat.id, '❌ This is not a valid id!')
