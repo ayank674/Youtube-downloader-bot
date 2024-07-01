@@ -46,7 +46,7 @@ def check_id(bot, message: types.Message):
     if message.text.isdigit() or message.text.lower() == "all":
         return message.text
     else:
-        bot.send_message(message.chat.id, f'❌ This is not a valid id!{message.text}')
+        bot.send_message(message.chat.id, '❌ This is not a valid id!')
         return None
 
 
