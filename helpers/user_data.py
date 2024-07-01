@@ -10,6 +10,9 @@ A python class to store the information of all the users' data in json format. T
 
 Basic conventions for role in this class:
 
+all: 
+int specified role is 0. There's no restriction on who can use.
+
 owner: 
 int specified role is 1. He can use all the commands.
 
@@ -28,7 +31,10 @@ int specified role is 3. He can use only the download command.
 
     def add_user(self, user: str, role: int) -> None:
         '''Function to add a new user to the data or change the role of an exisiting user.'''
-        user = int(user)
+        if user.lower() == "all":
+            user = 0
+        else:
+            user = int(user)
         self.cur.execute("INSERT INTO utube_user_data(ID, ROLE) VALUES(%s,%s) ON CONFLICT(ID) DO UPDATE SET ID = EXCLUDED.ID, ROLE = EXCLUDED.ROLE", (user, role))
         self.conn.commit()
 
@@ -68,6 +74,10 @@ int specified role is 3. He can use only the download command.
     def get_role(self, id):
         '''Returns the role of a user. If user is not authenticated, 4 is returned as role.'''
         id = int(id)
+        # Checking if everyone is allowed.
+        self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (0,)
+        if self.cur.fetchone():
+            return 0
         self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (id,))
         role = self.cur.fetchall()
         if role: # A non-empty string if id exists.
