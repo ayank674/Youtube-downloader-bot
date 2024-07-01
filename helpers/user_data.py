@@ -75,7 +75,7 @@ int specified role is 3. He can use only the download command.
         '''Returns the role of a user. If user is not authenticated, 4 is returned as role.'''
         id = int(id)
         # Checking if everyone is allowed.
-        self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (0,)
+        self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (0,))
         if self.cur.fetchone():
             return 0
         self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (id,))
