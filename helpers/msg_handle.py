@@ -14,6 +14,9 @@ def check_role(bot, message: types.Message, role: Literal['owner', 'admin', 'use
     role_id = {'owner': 1, 'admin': 2, 'user': 3}
     id = message.chat.id
     user_role = bot.user_data.get_role(id)
+    # Checking is bot usage is limited to users.
+    if not bot.user_data.restricted and role_id == 3:
+        return True
     if user_role <= role_id[role]:
         return True
     else:
@@ -43,7 +46,7 @@ def check_id(bot, message: types.Message):
     if message.text.isdigit() or message.text.lower() == "all":
         return message.text
     else:
-        bot.send_message(message.chat.id, '❌ This is not a valid id!')
+        bot.send_message(message.chat.id, f'❌ This is not a valid id!{message.text}')
         return None
 
 
