@@ -50,9 +50,9 @@ def check_id(bot, message: types.Message):
         return None
 
 
-def handle_exception(bot, user_id: int):
+def handle_exception(bot, user_id: int, exception):
     '''Sends a message to the user if an unexpected error is occured while executing a particular process.'''
-    bot.send_message(user_id, Config.CRASH_MESSAGE)
+    bot.send_message(user_id, f"{Config.CRASH_MESSAGE}\nError:{exception}")
 
 
 def handle_utube_exception(bot, user_id: int, exception):
@@ -75,4 +75,4 @@ def handle_utube_exception(bot, user_id: int, exception):
     if error_message:
         bot.send_message(user_id, error_message)
     else:
-        handle_exception(bot, user_id)
+        handle_exception(bot, user_id, exception)

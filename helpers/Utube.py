@@ -131,7 +131,7 @@ class utube_messages:
                 filtrd_streams = yt_obj.streams.filter(
                     adaptive=True, only_video=True)
 
-            elif file_type == '3':  # user nedds only audio.
+            elif file_type == '3':  # user needs only audio.
                 self.file_type = 'audio'
                 filtrd_streams = yt_obj.streams.filter(only_audio=True)
 
