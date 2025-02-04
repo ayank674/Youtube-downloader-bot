@@ -9,4 +9,4 @@ class Utubebot(Client):
     def __init__(self, name, **kwargs):
         super().__init__(name, **kwargs)
         self.user_data = user_data.User_data()
-        self.user_data.add_user(Config.OWNER, 1)
+        self.user_data.add_ser(Config.OWNER, 1)
