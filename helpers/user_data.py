@@ -10,9 +10,6 @@ A python class to store the information of all the users' data in json format. T
 
 Basic conventions for role in this class:
 
-all: 
-int specified role is 0. There's no restriction on who can use.
-
 owner: 
 int specified role is 1. He can use all the commands.
 
@@ -75,9 +72,8 @@ int specified role is 3. He can use only the download command.
         '''Returns the role of a user. If user is not authenticated, 4 is returned as role.'''
         id = int(id)
         # Checking if everyone is allowed.
-        self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (0,))
-        if self.cur.fetchone():
-            return 0
+        if not self.restricted:
+            return 3
         self.cur.execute("SELECT ROLE FROM utube_user_data WHERE ID = %s", (id,))
         role = self.cur.fetchall()
         if role: # A non-empty string if id exists.
