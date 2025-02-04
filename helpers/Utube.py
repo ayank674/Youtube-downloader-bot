@@ -1,7 +1,7 @@
 import random as rd
 import string
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery, Message
-from pytube import YouTube
+from pytubefix import YouTube
 import re
 import os
 import urllib.request
