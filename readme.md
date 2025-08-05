@@ -14,7 +14,6 @@ A Telegram bot that enables users to download YouTube videos by sending links, w
 - A Telegram account and a bot created via @BotFather.
 - A Render account for deployment ([Render](https://render.com)).
 - A PostgreSQL database, set up on Render.
-- Python environment to generate an encryption key.
 
 ## Installation
 
@@ -26,15 +25,7 @@ A Telegram bot that enables users to download YouTube videos by sending links, w
    - Visit [my.telegram.org](https://my.telegram.org/apps) and log in with your Telegram account.
    - Create a new app to obtain the `API_ID` and `API_HASH`.
 
-3. **Generate an Encryption Key**:
-   - In a Python environment, run the following to generate a Fernet key:
-     ```python
-     from cryptography.fernet import Fernet
-     print(Fernet.generate_key().decode())
-     ```
-   - Save the generated `ENCRYPT_KEY`.
-
-4. **Deploy on Render**:
+3. **Deploy on Render**:
    - Sign up for a Render account at [render.com](https://render.com).
    - Navigate to the [New Web Service page](https://dashboard.render.com/select-repo?type=web).
    - Paste the repository URL: [https://github.com/ayank674/Youtube-downloader-bot](https://github.com/ayank674/Youtube-downloader-bot).
@@ -46,7 +37,6 @@ A Telegram bot that enables users to download YouTube videos by sending links, w
      - `API_HASH`: From step 2.
      - `BOT_TOKEN`: From step 1.
      - `CRASH_MESSAGE`: A custom error message (e.g., "An error occurred. Please try again later.").
-     - `ENCRYPT_KEY`: From step 3.
    - Create a PostgreSQL database on Render and link it to your web service. Render will automatically set the `DATABASE_URL` environment variable.
    - Click "Create Web Service" to deploy the bot.
 
@@ -74,12 +64,11 @@ The bot requires the following environment variables for operation:
 | Variable        | Description                                                                 |
 |-----------------|-----------------------------------------------------------------------------|
 | `OWNER`         | Your Telegram user ID, obtainable via @userinfobot.                         |
-| `SESSION_NAME`  | A name for the bot’s session (e.g., "youtube_downloader").                   |
+| `SESSION_NAME`  | A name for the bot’s session (e.g., "youtube_downloader").                  |
 | `API_ID`        | Telegram API ID from my.telegram.org.                                       |
 | `API_HASH`      | Telegram API hash from my.telegram.org.                                     |
 | `BOT_TOKEN`     | The bot’s token provided by @BotFather.                                     |
 | `CRASH_MESSAGE` | A custom message displayed when errors occur.                               |
-| `ENCRYPT_KEY`   | Encryption key generated using Fernet for secure data handling.             |
 | `DATABASE_URL`  | URL of the PostgreSQL database, automatically set by Render.                |
 
 ## Troubleshooting
@@ -104,7 +93,7 @@ The bot relies on the following Python packages, as specified in `requirements.t
 | TgCrypto       | 1.2.5    | Cryptography for Pyrogram            |
 | Flask          | 2.3.2    | Web framework for health checks      |
 | gunicorn       | 21.2.0   | WSGI server for Flask                |
-| aiohttp        | 3.8.5    | Asynchronous HTTP client/server       |
+| aiohttp        | 3.8.5    | Asynchronous HTTP client/server      |
 | pytubefix      | 8.12.1   | Enhanced YouTube downloading         |
 
 These dependencies are automatically installed when deploying on Render.
