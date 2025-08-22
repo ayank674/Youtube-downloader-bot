@@ -1,6 +1,6 @@
-# Youtube-downloader-bot
+# Media-Processing-bot
 
-A Telegram bot that enables users to download YouTube videos by sending links, with features for user and admin management.
+A Telegram bot that enables users to process videos by sending links, with features for user and admin management.
 
 ## Features
 
